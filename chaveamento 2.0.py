@@ -28,20 +28,20 @@ def tela_inicial():
     ]
     return sg.Window('Chaveamento ultra blaster', Layout, finalize = True)
 
-def add_aluno(lst, aluno, jan):
+def add_aluno(lst, aluno, jan, x):
     if len(lst) <1:
         lst.append([aluno[4], aluno[5], aluno[3]])
         jan['validação'].Update('Adicionado com sucesso'.center(86), text_color = 'GREEN')
-        num = 0            
+        x = 0            
     else:
         for n in lst:
-            if num in str(n[0]):
+            if x in str(n[0]):
                 jan['validação'].Update('ALUNO JÁ FOI CADASTRADO ANTES'.center(72), text_color = 'RED')
                 break
         else:
             lst.append([aluno[4], aluno[5], aluno[3]])
             jan['validação'].Update('Adicionado com sucesso'.center(86), text_color = 'GREEN')
-            num = 0
+            x = 0
 
 def lista_aluno(lay, lst):
     titulo = [[sg.Text('ID', size=(8,1)), sg.Text('NOME', size=(40)), sg.Text('ESCOLA', size=(40))]]
@@ -96,22 +96,22 @@ while True:
 
         if evento == 'Adicionar' and str(linha[4]) in str(num):
             if linha[0] == 'Pré-Mirim' and linha[1] == 'Masculino':
-                add_aluno(pmm, linha, janela)
+                add_aluno(pmm, linha, janela, num)
 
             elif linha[0] == 'Pré-Mirim' and linha[1] == 'Feminino':
-                add_aluno(pmf, linha, janela)
+                add_aluno(pmf, linha, janela, num)
 
             elif linha[0] == 'Mirim' and linha[1] == 'Masculino':
-                add_aluno(mm, linha, janela)
+                add_aluno(mm, linha, janela, num)
 
             elif linha[0] == 'Mirim' and linha[1] == 'Feminino':
-                add_aluno(mf, linha, janela)
+                add_aluno(mf, linha, janela, num)
 
             elif linha[0] == 'Infantil' and linha[1] == 'Masculino':
-                add_aluno(im, linha, janela)
+                add_aluno(im, linha, janela, num)
 
             elif linha[0] == 'Infantil' and linha[1] == 'Feminino':
-                add_aluno(inf, linha, janela)
+                add_aluno(inf, linha, janela, num)
 
         if evento == 'Remover' and str(linha[4]) == num:
             for pos, item in enumerate(listaMae):
@@ -166,6 +166,19 @@ while True:
         janela2.hide()
 
     if  evento == 'SIM':
+        dados = []
+        for item in listaMae:
+            dados.append(len(item))
+
+        barra = sum(dados*2)
+        progresso = 0
+        for i in range(barra+1):
+            if barra == 0:
+                break
+            sg.one_line_progress_meter(title = '', current_value = i + progresso, max_value = barra, 
+            orientation = 'h', no_button = True, no_titlebar = True)
+            sleep(0.01)
+
         janela2.hide()
         planilha = Workbook()
         categoria = ['Pré-Mirim Masc.', 'Pré-Mirim Fem.', 'Mirim Masc.', 'Mirim Fem.', 'Infantil Masc.', 'Infantil Fem.']
@@ -192,15 +205,11 @@ while True:
                     planilha['Infantil Masc.'].append([jogador[0], jogador[1], jogador[2]])
                 elif item == inf:
                     planilha['Infantil Fem.'].append([jogador[0], jogador[1], jogador[2]])
+                progresso +=1
 
         planilha.save('Competidores.xlsx')
-        dados = []
-        padrão = []
         potencia = 1
-        for item in listaMae:
-            shuffle(item)
-            dados.append(len(item))
-
+        padrão = []
         while True:
             n = 2 ** potencia
             padrão.append(n)
@@ -208,17 +217,9 @@ while True:
             if max(dados) <= n:
                 break
 
-        barra = sum(dados)
-        progresso = 0
-        for i in range(barra+1):
-            if barra == 0:
-                break
-            sg.one_line_progress_meter(title = '', current_value = i + progresso, max_value = barra, 
-            orientation = 'h', no_button = True, no_titlebar = True)
-            sleep(0.01)
-
         wb = load_workbook('sumula.xlsx')
         for item in listaMae:
+            shuffle(item)
             if item == pmm:
                 planilha1 = wb['Pré-Mirim Masc.']
             elif item == pmf:
