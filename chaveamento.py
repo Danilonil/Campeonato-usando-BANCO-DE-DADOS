@@ -26,8 +26,37 @@ def tela_inicial():
     [sg.Button('Iniciar chaveamento', size = (30,1), pad = (40,1), button_color= 'LIGHT BLUE4', font = ("Arial", 14))],
     [sg.Text(key = 'validação3')]
     ]
-
     return sg.Window('Chaveamento ultra blaster', Layout, finalize = True)
+
+def add_aluno(lst, aluno, jan):
+    if len(lst) <1:
+        lst.append([aluno[4], aluno[5], aluno[3]])
+        jan['validação'].Update('Adicionado com sucesso'.center(86), text_color = 'GREEN')
+        num = 0            
+    else:
+        for n in lst:
+            if num in str(n[0]):
+                jan['validação'].Update('ALUNO JÁ FOI CADASTRADO ANTES'.center(72), text_color = 'RED')
+                break
+        else:
+            lst.append([aluno[4], aluno[5], aluno[3]])
+            jan['validação'].Update('Adicionado com sucesso'.center(86), text_color = 'GREEN')
+            num = 0
+
+def lista_aluno(lay, lst):
+    titulo = [[sg.Text('ID', size=(8,1)), sg.Text('NOME', size=(40)), sg.Text('ESCOLA', size=(40))]]
+    for i in lst:
+        lista = [[sg.Text(i[0], size = (8)), sg.Text(i[1].title(), size = (40)), sg.Text(i[2].title(), size = (40))]]
+        lay = lay + lista
+    lay = [[sg.Column(titulo)],
+    [sg.Column(lay, scrollable= True, vertical_scroll_only= True, )]]
+    window = sg.Window('Tabela de competidores', lay)
+    event, values = window.read()
+
+def add_categ(variável, txt1, txt2):
+    planilha1.cell(row = lin, column = 1, value = variável)
+    planilha1.cell(row = lin, column = 2, value = txt1)
+    planilha1.cell(row = lin, column = 3, value = txt2)
 
 def popup():
     layout7 = [[sg.Text('O chaveamento deve ser iniciado somente depois que todos os competidores forem adicionados ao torneio. \n Esta ação será permanente. Deseja continuar?')], 
@@ -67,100 +96,22 @@ while True:
 
         if evento == 'Adicionar' and str(linha[4]) in str(num):
             if linha[0] == 'Pré-Mirim' and linha[1] == 'Masculino':
-                if len(pmm) <1:
-                    pmm.append([linha[4], linha[5], linha[3]])
-                    janela['validação'].Update('Adicionado com sucesso'.center(86), text_color = 'GREEN')
-                    num = 0            
-                else:
-                    for n in pmm:
-                        if num in str(n[0]):
-                            janela['validação'].Update('ALUNO JÁ FOI CADASTRADO ANTES'.center(72), text_color = 'RED')
-                            break
-                    else:
-                        pmm.append([linha[4], linha[5], linha[3]])
-                        janela['validação'].Update('Adicionado com sucesso'.center(86), text_color = 'GREEN')
-                        num = 0
-                        break
+                add_aluno(pmm, linha, janela)
 
             elif linha[0] == 'Pré-Mirim' and linha[1] == 'Feminino':
-                if len(pmf) <1:
-                    pmf.append([linha[4], linha[5], linha[3]])
-                    janela['validação'].Update('Adicionado com sucesso'.center(86), text_color = 'GREEN')
-                    num = 0            
-                else:
-                    for n in pmf:
-                        if num in str(n[0]):
-                            janela['validação'].Update('ALUNA JÁ FOI CADASTRADA ANTES'.center(72), text_color = 'RED')
-                            break
-                    else:
-                        pmf.append([linha[4], linha[5], linha[3]])
-                        janela['validação'].Update('Adicionado com sucesso'.center(86), text_color = 'GREEN')
-                        num = 0
-                        break
+                add_aluno(pmf, linha, janela)
 
             elif linha[0] == 'Mirim' and linha[1] == 'Masculino':
-                if len(mm) <1:
-                    mm.append([linha[4], linha[5], linha[3]])
-                    janela['validação'].Update('Adicionado com sucesso'.center(86), text_color = 'GREEN')
-                    num = 0            
-                else:
-                    for n in mm:
-                        if num in str(n[0]):
-                            janela['validação'].Update('ALUNO JÁ FOI CADASTRADO ANTES'.center(72), text_color = 'RED')
-                            break
-                    else:
-                        mm.append([linha[4], linha[5], linha[3]])
-                        janela['validação'].Update('Adicionado com sucesso'.center(86), text_color = 'GREEN')
-                        num = 0
-                        break
+                add_aluno(mm, linha, janela)
 
             elif linha[0] == 'Mirim' and linha[1] == 'Feminino':
-                if len(mf) <1:
-                    mf.append([linha[4], linha[5], linha[3]])
-                    janela['validação'].Update('Adicionado com sucesso'.center(86), text_color = 'GREEN')
-                    num = 0            
-                else:
-                    for n in mf:
-                        if num in str(n[0]):
-                            janela['validação'].Update('ALUNA JÁ FOI CADASTRADA ANTES'.center(72), text_color = 'RED')
-                            break
-                    else:
-                        mf.append([linha[4], linha[5], linha[3]])
-                        janela['validação'].Update('Adicionado com sucesso'.center(86), text_color = 'GREEN')
-                        num = 0
-                        break
+                add_aluno(mf, linha, janela)
 
             elif linha[0] == 'Infantil' and linha[1] == 'Masculino':
-                if len(im) <1:
-                    im.append([linha[4], linha[5], linha[3]])
-                    janela['validação'].Update('Adicionado com sucesso'.center(86), text_color = 'GREEN')
-                    num = 0            
-                else:
-                    for n in im:
-                        if num in str(n[0]):
-                            janela['validação'].Update('ALUNO JÁ FOI CADASTRADO ANTES'.center(72), text_color = 'RED')
-                            break
-                    else:
-                        im.append([linha[4], linha[5], linha[3]])
-                        janela['validação'].Update('Adicionado com sucesso'.center(86), text_color = 'GREEN')
-                        num = 0
-                        break
+                add_aluno(im, linha, janela)
 
             elif linha[0] == 'Infantil' and linha[1] == 'Feminino':
-                if len(inf) <1:
-                    inf.append([linha[4], linha[5], linha[3]])
-                    janela['validação'].Update('Adicionado com sucesso'.center(86), text_color = 'GREEN')
-                    num = 0            
-                else:
-                    for n in inf:
-                        if num in str(n[0]):
-                            janela['validação'].Update('ALUNA JÁ FOI CADASTRADA ANTES'.center(72), text_color = 'RED')
-                            break
-                    else:
-                        inf.append([linha[4], linha[5], linha[3]])
-                        janela['validação'].Update('Adicionado com sucesso'.center(86), text_color = 'GREEN')
-                        num = 0
-                        break
+                add_aluno(inf, linha, janela)
 
         if evento == 'Remover' and str(linha[4]) == num:
             for pos, item in enumerate(listaMae):
@@ -175,69 +126,27 @@ while True:
         combo = valor['combo']
         if combo == 'Pré-mirim Masc.':
             layout1 = []
-            titulo = [[sg.Text('ID', size=(8,1)), sg.Text('NOME', size=(40)), sg.Text('ESCOLA', size=(40))]]
-            for i in pmm:
-                lista = [[sg.Text(i[0], size = (8)), sg.Text(i[1].title(), size = (40)), sg.Text(i[2].title(), size = (40))]]
-                layout1 = layout1 + lista
-            layout1 = [[sg.Column(titulo)],
-            [sg.Column(layout1, scrollable= True, vertical_scroll_only= True, )]]
-            window = sg.Window('Tabela de competidores', layout1)
-            event, values = window.read()
+            lista_aluno(layout1, pmm)
 
         elif combo == 'Pré-mirim Fem.':
             layout2 = []
-            titulo = [[sg.Text('ID', size=(8,1)), sg.Text('NOME', size=(40)), sg.Text('ESCOLA', size=(40))]]
-            for i in pmf:
-                lista = [[sg.Text(i[0], size = (8)), sg.Text(i[1].title(), size = (40)), sg.Text(i[2].title(), size = (40))]]
-                layout2 = layout2 + lista
-            layout2 = [[sg.Column(titulo)],
-            [sg.Column(layout2, scrollable= True, vertical_scroll_only= True, )]]
-            window = sg.Window('Tabela de competidores', layout2)
-            event, values = window.read()
+            lista_aluno(layout2, pmf)
 
         elif combo == 'Mirim Masc.':
             layout3 = []
-            titulo = [[sg.Text('ID', size=(8,1)), sg.Text('NOME', size=(40)), sg.Text('ESCOLA', size=(40))]]
-            for i in mm:
-                lista = [[sg.Text(i[0], size = (8)), sg.Text(i[1].title(), size = (40)), sg.Text(i[2].title(), size = (40))]]
-                layout3 = layout3 + lista 
-            layout3 = [[sg.Column(titulo)],
-            [sg.Column(layout3, scrollable= True, vertical_scroll_only= True, )]]
-            window = sg.Window('Tabela de competidores', layout3)
-            event, values = window.read()
+            lista_aluno(layout3, mm)
 
         elif combo == 'Mirim Fem.':
             layout4 = []
-            titulo = [[sg.Text('ID', size=(8,1)), sg.Text('NOME', size=(40)), sg.Text('ESCOLA', size=(40))]]
-            for i in mf:
-                lista = [[sg.Text(i[0], size = (8)), sg.Text(i[1].title(), size = (40)), sg.Text(i[2].title(), size = (40))]]
-                layout4 = layout4 + lista
-            layout4 = [[sg.Column(titulo)],
-            [sg.Column(layout4, scrollable= True, vertical_scroll_only= True, )]]
-            window = sg.Window('Tabela de competidores', layout4)
-            event, values = window.read()
+            lista_aluno(layout4, mf)
 
         elif combo == 'Infantil Masc.':
             layout5 = []
-            titulo = [[sg.Text('ID', size=(8,1)), sg.Text('NOME', size=(40)), sg.Text('ESCOLA', size=(40))]]
-            for i in im:
-                lista = [[sg.Text(i[0], size = (8)), sg.Text(i[1].title(), size = (40)), sg.Text(i[2].title(), size = (40))]]
-                layout5 = layout5 + lista
-            layout5 = [[sg.Column(titulo)],
-            [sg.Column(layout5, scrollable= True, vertical_scroll_only= True, )]] 
-            window = sg.Window('Tabela de competidores', layout5)
-            event, values = window.read()
+            lista_aluno(layout5, im)
 
         elif combo == 'Infantil Fem.':
             layout6 = []
-            titulo = [[sg.Text('ID', size=(8,1)), sg.Text('NOME', size=(40)), sg.Text('ESCOLA', size=(40))]]
-            for i in inf:
-                lista = [[sg.Text(i[0], size = (8)), sg.Text(i[1].title(), size = (40)), sg.Text(i[2].title(), size = (40))]]
-                layout6 = layout6 + lista 
-            layout6 = [[sg.Column(titulo)],
-            [sg.Column(layout6, scrollable= True, vertical_scroll_only= True, )]]
-            window = sg.Window('Tabela de competidores', layout6)
-            event, values = window.read()
+            lista_aluno(layout6, inf)
     
     if window == janela:
         if valor['A'] == True or valor['B'] == True:
@@ -310,46 +219,39 @@ while True:
 
         wb = load_workbook('sumula.xlsx')
         for item in listaMae:
-            contjogador = isentos = 0
             if item == pmm:
                 planilha1 = wb['Pré-Mirim Masc.']
-                for linha in range(2, len(pmm)//8 + 4):
-                    planilha1.cell(row = linha, column = 2, value = 'PRÉ-MIRIM')
-                    planilha1.cell(row = linha, column = 3, value = 'MASCULINO')
             elif item == pmf:
                 planilha1 = wb['Pré-Mirim Fem.']
-                for linha in range(2, len(pmf)//8 + 4):
-                    planilha1.cell(row = linha, column = 2, value = 'PRÉ-MIRIM')
-                    planilha1.cell(row = linha, column = 3, value = 'FEMININO')
             elif item == mm:
                 planilha1 = wb['Mirim Masc.']
-                for linha in range(2, len(mm)//8 + 4):
-                    planilha1.cell(row = linha, column = 2, value = 'MIRIM')
-                    planilha1.cell(row = linha, column = 3, value = 'MASCULINO')
             elif item == mf:
                 planilha1 = wb['Mirim Fem.']
-                for linha in range(2, len(mf)//8 + 4):
-                    planilha1.cell(row = linha, column = 2, value = 'MIRIM')
-                    planilha1.cell(row = linha, column = 3, value = 'FEMININO')
             elif item == im:
                 planilha1 = wb['Infantil Masc.']
-                for linha in range(2, len(im)//8 + 4):
-                    planilha1.cell(row = linha, column = 2, value = 'INFANTIL')
-                    planilha1.cell(row = linha, column = 3, value = 'MASCULINO')
             elif item == inf:
                 planilha1 = wb['Infantil Fem.']
-                for linha in range(2, len(inf)//8 + 4):
-                    planilha1.cell(row = linha, column = 2, value = 'INFANTIL')
-                    planilha1.cell(row = linha, column = 3, value = 'FEMININO')
 
+            contjogador = isentos = 0
             lin = 2
             col = 4
             for jogador in item:
                 if col == 20:
                     lin += 1
                     col = 4
-                if planilha1.cell(row = lin, column = 1, value = ''):
-                    planilha1.cell(row = lin, column = 1, value = chave)
+                if planilha1.cell(row = lin, column = 1, value = '') and item == pmm:
+                    add_categ(chave, 'PRÉ-MIRIM', 'MASCULINO')
+                elif planilha1.cell(row = lin, column = 1, value = '') and item == pmf:
+                    add_categ(chave, 'PRÉ-MIRIM', 'FEMININO')
+                elif planilha1.cell(row = lin, column = 1, value = '') and item == mm:
+                    add_categ(chave, 'MIRIM', 'MASCULINO')
+                elif planilha1.cell(row = lin, column = 1, value = '') and item == mf:
+                    add_categ(chave, 'MIRIM', 'FEMININO')
+                elif planilha1.cell(row = lin, column = 1, value = '') and item == im:
+                    add_categ(chave, 'INFANTIL', 'MASCULINO')
+                elif planilha1.cell(row = lin, column = 1, value = '') and item == inf:
+                    add_categ(chave, 'INFANTIL', 'FEMININO')
+                    
                 planilha1.cell(row = lin, column = col, value = jogador[1])
                 col += 1
                 planilha1.cell(row = lin, column = col, value = jogador[2])
@@ -371,8 +273,18 @@ while True:
                 if col == 20:
                     lin += 1
                     col = 4
-                if planilha1.cell(row = lin, column = 1, value = ''):
-                    planilha1.cell(row = lin, column = 1, value = chave)
+                if planilha1.cell(row = lin, column = 1, value = '') and item == pmm:
+                    add_categ(chave, 'PRÉ-MIRIM', 'MASCULINO')
+                elif planilha1.cell(row = lin, column = 1, value = '') and item == pmf:
+                    add_categ(chave, 'PRÉ-MIRIM', 'FEMININO')
+                elif planilha1.cell(row = lin, column = 1, value = '') and item == mm:
+                    add_categ(chave, 'MIRIM', 'MASCULINO')
+                elif planilha1.cell(row = lin, column = 1, value = '') and item == mf:
+                    add_categ(chave, 'MIRIM', 'FEMININO')
+                elif planilha1.cell(row = lin, column = 1, value = '') and item == im:
+                    add_categ(chave, 'INFANTIL', 'MASCULINO')
+                elif planilha1.cell(row = lin, column = 1, value = '') and item == inf:
+                    add_categ(chave, 'INFANTIL', 'FEMININO')
                 planilha1.cell(row = lin, column = col, value = jogador[1])
                 col += 1
                 planilha1.cell(row = lin, column = col, value = jogador[2])
