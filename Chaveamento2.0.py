@@ -147,7 +147,7 @@ while True:
         elif combo == 'Infantil Fem.':
             layout6 = []
             lista_aluno(layout6, inf)
-    
+
     if window == janela:
         if valor['A'] == True or valor['B'] == True:
             chave = 'B'
