@@ -186,11 +186,13 @@ while True:
         for c in categoria:
             planilha.create_sheet(c)
             planilha[c].cell(row = 1, column = 1, value = c)
+
         for pagina in planilha:
             pagina.column_dimensions['B'].width = 50
             pagina.column_dimensions['C'].width = 50
             pagina.merge_cells('A1:C1')
             pagina.append(['ID', 'NOME', 'ESCOLA'])
+
         for item in listaMae:
             for jogador in item:
                 if item == pmm:
@@ -252,7 +254,7 @@ while True:
                     add_categ(chave, 'INFANTIL', 'MASCULINO')
                 elif planilha1.cell(row = lin, column = 1, value = '') and item == inf:
                     add_categ(chave, 'INFANTIL', 'FEMININO')
-                    
+
                 planilha1.cell(row = lin, column = col, value = jogador[1])
                 col += 1
                 planilha1.cell(row = lin, column = col, value = jogador[2])
