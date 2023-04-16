@@ -5,6 +5,7 @@
         "contjogador",
         "janelab",
         "listacateg",
+        "openpyxl",
         "titlebar"
     ]
 }
